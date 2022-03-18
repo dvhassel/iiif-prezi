@@ -1254,7 +1254,7 @@ class Image(ContentResource):
     _extra_properties = ['format', 'height', 'width']
     _integer_properties = ['height', 'width']
 
-    def __init__(self, factory, ident, label, iiif=False, region='full', size='full'):
+    def __init__(self, factory, ident, label, iiif=False, region='full', size='full', cantaloupe_slash_substitute = '/'):
         """Initialize Image resource."""
         self._factory = factory
         self.type = self.__class__._type
@@ -1272,10 +1272,10 @@ class Image(ContentResource):
             self.service = ImageService(factory, ident)
 
             if factory.default_image_api_version[0] == '1':
-                self.id = factory.default_base_image_uri + '/' + \
+                self.id = factory.default_base_image_uri + cantaloupe_slash_substitute + \
                     ident + '/%s/%s/0/native.jpg' % (region, size)
             else:
-                self.id = factory.default_base_image_uri + '/' + \
+                self.id = factory.default_base_image_uri + cantaloupe_slash_substitute + \
                     ident + '/%s/%s/0/default.jpg' % (region, size)
             self._identifier = ident
             self.format = "image/jpeg"
